@@ -1,6 +1,8 @@
 ﻿using E_ComerceApp.Entities;
+using E_ComerceApp.ViewModels;
 using E_CommerceApp.Models;
 using E_CommerceApp.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceApp.Repositories.Classes
 {
@@ -12,10 +14,53 @@ namespace E_CommerceApp.Repositories.Classes
         {
             _context = context;
         }
-
         public Cart GetCartById(int id)
         {
             return _context.Carts.Find(id);
+        }
+
+        public CartViewModel GetCartViewModel(string userId)
+        {
+            var cart = _context.Carts
+                .Include(c => c.CartItems)
+                    .ThenInclude(ci => ci.Product)
+                .FirstOrDefault(c => c.ApplicationUserId == userId);
+
+            if (cart == null)
+            {
+                return null;
+            }
+
+            var cartViewModel = new CartViewModel
+            {
+                CartId = cart.ID,
+                UserId = cart.ApplicationUserId,
+                TotalPrice = cart.CartItems.Sum(ci => ci.Quantity * ci.Product.Price)
+            };
+
+            foreach (var cartItem in cart.CartItems)
+            {
+                var cartItemViewModel = new CartItemViewModel
+                {
+                    ProductId = cartItem.Product.ID,
+                    ProductName = cartItem.Product.Name,
+                    ProductImage = cartItem.Product.ImageUrl,
+                    Quantity = cartItem.Quantity,
+                    Price = cartItem.Product.Price
+                };
+                cartViewModel.Items.Add(cartItemViewModel);
+            }
+
+            return cartViewModel;
+        }
+        public Cart GetCartByUserId(string userId)
+        {
+            return _context.Carts.Include(c => c.CartItems).ThenInclude(ci => ci.Product).FirstOrDefault(c => c.ApplicationUserId == userId);
+        }
+
+        public CartItem GetCartItemByProductId(int cartId, int productId)
+        {
+            return _context.CartItems.FirstOrDefault(ci => ci.CartID == cartId && ci.ProductID == productId);
         }
 
         public void CreateCart(Cart cart)
@@ -24,19 +69,39 @@ namespace E_CommerceApp.Repositories.Classes
             _context.SaveChanges();
         }
 
-        public void UpdateCart(Cart cart)
+        public void AddCartItem(CartItem item)
         {
-            _context.Carts.Update(cart);
+            _context.CartItems.Add(item);
             _context.SaveChanges();
         }
 
-        public void DeleteCart(int id)
+        public void RemoveCartItem(CartItem item)
         {
-            var cart = _context.Brands.Find(id);
-            _context.Brands.Remove(cart);
+            _context.CartItems.Remove(item);
             _context.SaveChanges();
         }
 
+        public void IncreaseCartItemQuantity(CartItem item, int quantity)
+        {
+            item.Quantity += quantity;
+            _context.SaveChanges();
+        }
+
+        public void DecreaseCartItemQuantity(CartItem item, int quantity)
+        {
+            item.Quantity -= quantity;
+            if (item.Quantity <= 0)
+            {
+                _context.CartItems.Remove(item);
+            }
+            _context.SaveChanges();
+        }
+        public void ClearCart(int cartId)
+        {
+            var cartItems = _context.CartItems.Where(c => c.CartID == cartId);
+            _context.CartItems.RemoveRange(cartItems);
+            _context.SaveChanges();
+        }
     }
 }
 

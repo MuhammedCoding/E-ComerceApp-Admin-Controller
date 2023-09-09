@@ -42,6 +42,7 @@ namespace E_ComerceApp
             builder.Services.AddScoped<IAdminService, AdminService>();
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ICartService, CartService>();
             builder.Services.AddScoped<IProductMapper, ProductMapper>();
 
 

@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model E_ComerceApp.ViewModels.CartViewModel
+
+@if (Model.Items.Any())
+{
+
+    <div class="shadow-lg p-5 bg-main-light mx-auto rounded-4">
+        <div class="cart-header d-flex justify-content-between align-items-center">
+            <div class="cart-main-info">
+                <h3>Shopoing Cart</h3>
+                <h6 class="text-main">Total Price : @Model.TotalPrice</h6>
+            </div>
+            <div class="clear-cart">
+                <form asp-controller="Cart" asp-action="ClearCart" method="post">
+                    <input type="hidden" name="cartId" value="@Model.CartId" />
+                    <button class="btn btn-danger" type="submit">Clear Cart</button>
+                </form>
+            </div>
+        </div>
+
+
+        @foreach (var item in Model.Items)
+        {
+            <div class="row align-items-center py-5 product">
+                
+                <div class="col-md-2">
+                    <img class="w-100" src="@item.ProductImage" alt="@item.ProductName">
+                </div>
+                <div class="col-md-10 d-flex justify-content-between mt-5 mt-md-0 ">
+                    <div>
+                        <h6>@item.ProductName</h6>
+                        <h6 class="text-main my-2">Price:@item.Price</h6>
+                        <a asp-controller="cart" asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" class="btn btn-danger"> Remove </a>
+                    </div>
+                    <div>
+                        <a asp-controller="cart" asp-action="IncreaseQuantity" asp-route-productId="@item.ProductId"
+                                class="btn-sm btn btn-count bg-main text-white">
+                            +
+                        </a>
+                        <span class="mx-2">@item.Quantity</span>
+                        <a asp-controller="cart" asp-action="DecreaseQuantity" asp-route-productId="@item.ProductId"
+                           class="btn-sm btn btn-count bg-main text-white">
+                            -
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="cart-footer pt-3">
+                <a class="btn bg-main text-white btn-checkout">Checkout</a>
+            </div>
+
+        }
+
+
+    </div>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
