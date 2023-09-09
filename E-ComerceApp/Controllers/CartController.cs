@@ -23,13 +23,13 @@ namespace E_ComerceApp.Controllers
             var model = _cartService.GetCart(user.Id);
             return View(model);
         }
-        public async Task<IActionResult> AddToCart(int id)
+        public async Task<IActionResult> AddToCart(int productId, string controllerName)
         {
             var user = await _userManager.GetUserAsync(User);
 
-            _cartService.AddToCart(user.Id, id);
+            _cartService.AddToCart(user.Id, productId);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index",controllerName);
         }
         public async Task<IActionResult> DecreaseQuantity(int productid)
         {

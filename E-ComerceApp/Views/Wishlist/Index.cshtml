@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model E_ComerceApp.ViewModels.WishlistViewModel
+
+@if (Model.Items.Any())
+{
+
+    <div class="shadow-lg p-5 bg-main-light mx-auto rounded-4">
+        <div class="cart-header d-flex justify-content-between align-items-center">
+            <div class="cart-main-info">
+                <h3>Wishlist</h3>
+            </div>
+            <div class="clear-wishlist">
+                <form asp-controller="Wishlist" asp-action="ClearWishlist" method="post">
+                    <input type="hidden" name="wishlistId" value="@Model.WishlistId" />
+                    <button class="btn btn-danger" type="submit">Clear Wishlist</button>
+                </form>
+            </div>
+        </div>
+
+
+        @foreach (var item in Model.Items)
+        {
+            <div class="row align-items-center py-5 product">
+
+                <div class="col-md-2">
+                    <img class="w-100" src="@item.ProductImage" alt="@item.ProductName">
+                </div>
+                <div class="col-md-10 d-flex justify-content-between mt-5 mt-md-0 ">
+                    <div>
+                        <h6>@item.ProductName</h6>
+                        <h6 class="text-main my-2">Price:@item.Price</h6>
+                        <a asp-controller="wishlist" asp-action="RemoveFromWishlist" asp-route-productId="@item.ProductId" class="btn btn-danger"> Remove </a>
+                    </div>
+                    <div>
+                        <a asp-action="addtocart" asp-controller="cart" asp-route-productid="@item.ProductId" asp-route-controllerName="Wishlist" class="bg-main text-white btn mb-3 add-btn">Add to Cart</a>
+                    </div>
+
+                </div>
+            </div>
+        }
+
+
+    </div>
+}
+else
+{
+    <p>Your Wishlist is empty.</p>
+}

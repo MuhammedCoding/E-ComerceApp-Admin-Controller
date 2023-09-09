@@ -9,15 +9,16 @@ namespace E_ComerceApp.Controllers
     public class CustomerController : Controller
     {
         private IProductService _productService;
-
         public CustomerController(IProductService productService)
         {
             _productService = productService;
         }
         public IActionResult Index()
         {
-            List<ProductWithCategoryAndBrandViewModel> products = _productService.GetProductsWithCategoriesAndBrands();
+           List<ProductWithCategoryAndBrandViewModel> products = _productService.GetProductsWithCategoriesAndBrands();
            return View(products);
         }
+
+
     }
 }
