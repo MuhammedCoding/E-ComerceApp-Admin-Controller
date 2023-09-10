@@ -1,6 +1,8 @@
 using E_ComerceApp.Entities;
 using E_ComerceApp.Mappers.Classes;
 using E_ComerceApp.Mappers.Interfaces;
+using E_ComerceApp.Repositories.Classes;
+using E_ComerceApp.Repositories.Interfaces;
 using E_ComerceApp.Services.Classes;
 using E_ComerceApp.Services.Interfaces;
 using E_CommerceApp.Models;
@@ -34,16 +36,31 @@ namespace E_ComerceApp
                AddEntityFrameworkStores<E_CommerceEntities>();
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
+            
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            
             builder.Services.AddScoped<IWishlistRepository, WishlistRepository>();
+            
             builder.Services.AddScoped<ICartRepository, CartRepository>();
+
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
             builder.Services.AddScoped<IAuthService, AuthService>();
+            
             builder.Services.AddScoped<IAdminService, AdminService>();
+            
             builder.Services.AddScoped<ICustomerService, CustomerService>();
+            
             builder.Services.AddScoped<IProductService, ProductService>();
+            
             builder.Services.AddScoped<ICartService, CartService>();
+            
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            
             builder.Services.AddScoped<IWishlistService, WishlistService>();
+            
             builder.Services.AddScoped<IProductMapper, ProductMapper>();
 
             var app = builder.Build();

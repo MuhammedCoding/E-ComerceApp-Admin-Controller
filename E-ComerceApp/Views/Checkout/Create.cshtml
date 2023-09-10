@@ -1,0 +1,31 @@
+﻿@model E_ComerceApp.ViewModels.OrderViewModel
+
+<h2>Create Order</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Address">Address</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhoneNumber">Phone Number</label>
+        <input asp-for="PhoneNumber" class="form-control" />
+        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+    </div>
+    <input asp-for="UserId" type="hidden" />
+    <input asp-for="TotalPrice" type="hidden" />
+
+    @for (var i = 0; i < Model.OrderItems?.Count; i++)
+    {
+        <input asp-for="@Model.OrderItems[i].ProductId" type="hidden" />
+        <input asp-for="@Model.OrderItems[i].Quantity" type="hidden" />
+        <input asp-for="@Model.OrderItems[i].Price" type="hidden" />
+        <input asp-for="@Model.OrderItems[i].ProductImage" type="hidden" />
+        <input asp-for="@Model.OrderItems[i].ProductName" type="hidden" />
+    }
+
+    <button type="submit" class="btn btn-main">Create Order</button>
+</form>

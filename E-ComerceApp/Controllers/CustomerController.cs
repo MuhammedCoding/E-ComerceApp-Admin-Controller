@@ -19,6 +19,5 @@ namespace E_ComerceApp.Controllers
            return View(products);
         }
 
-
     }
 }

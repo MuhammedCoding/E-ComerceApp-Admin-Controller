@@ -1,0 +1,27 @@
+﻿@model List<E_ComerceApp.ViewModels.OrderViewModel>
+
+<h2>Your Orders</h2>
+
+@foreach (var order in Model)
+{
+    <div class="order">
+        <p>Order Date: @order.OrderDate</p>
+        <p>Total Price: @order.TotalPrice</p>
+        <p>Address: @order.Address</p>
+        <p>Phone Number: @order.PhoneNumber</p>
+
+        <h4>Items:</h4>
+        <ul>
+            @foreach (var item in order.OrderItems)
+            {
+                <li>
+                    <img src="@item.ProductImage" alt="@item.ProductName">
+                    <p>Product Name: @item.ProductName</p>
+                    <p>Quantity: @item.Quantity</p>
+                    <p>Price: @item.Price</p>
+                </li>
+            }
+        </ul>
+    </div>
+    <hr />
+}
