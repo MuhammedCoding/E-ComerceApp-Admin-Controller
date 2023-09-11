@@ -34,6 +34,7 @@ namespace E_ComerceApp.Services.Classes
             user.UserName = model.UserName;
             user.PasswordHash = model.Password;
             user.Address = model.Address;
+            user.PhoneNumber = model.PhoneNumber;
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             if (!await _roleManager.RoleExistsAsync("Customer"))
             {

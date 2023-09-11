@@ -10,7 +10,7 @@
 <h1>@ViewBag.title</h1>
 
 
-<form method="post" asp-action="@ViewBag.link" asp-controller="Admin">
+<form method="post" asp-action="@ViewBag.link" asp-controller="Admin" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <input type="hidden" asp-for="Id" />
@@ -31,10 +31,16 @@
         <span asp-validation-for="Price" class="text-danger"></span>
 
     </div>
+
     <div class="form-group">
-        <label asp-for="ImageUrl"></label>
-        <input asp-for="ImageUrl" class="form-control" />
-        <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        <label asp-for="Count"></label>
+        <input asp-for="Count" class="form-control" />
+        <span asp-validation-for="Count" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImageFile"></label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="BrandId">Brand</label>

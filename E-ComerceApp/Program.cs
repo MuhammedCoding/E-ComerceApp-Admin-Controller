@@ -47,12 +47,17 @@ namespace E_ComerceApp
 
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
+            builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+
+
             builder.Services.AddScoped<IAuthService, AuthService>();
             
             builder.Services.AddScoped<IAdminService, AdminService>();
             
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             
+            builder.Services.AddScoped<IProfileSevice, ProfileService>();
+
             builder.Services.AddScoped<IProductService, ProductService>();
             
             builder.Services.AddScoped<ICartService, CartService>();

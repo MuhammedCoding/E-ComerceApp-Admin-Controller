@@ -2,6 +2,7 @@
 using E_CommerceApp.Services.Interfaces;
 using E_CommerceApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_CommerceApp.Controllers
@@ -60,13 +61,19 @@ namespace E_CommerceApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateProduct(ProductWithCategoryAndBrandViewModel viewModel)
         {
+            if (viewModel.ImageFile == null)
+            {
+                ModelState.AddModelError("ImageFile", "The ImageFile field is required.");
+            }
             if (ModelState.IsValid)
             {
+               
                 _adminService.CreateProduct(viewModel);
                 return RedirectToAction("Index");
             }
             return View(viewModel);
         }
+
     }
 }
 

@@ -27,6 +27,7 @@ namespace E_ComerceApp.Mappers.Classes
                 Price = viewModel.Price,
                 ImageUrl = viewModel.ImageUrl,
                 Description = viewModel.Description,
+                Count = viewModel.Count,
             };
         }
 
@@ -40,6 +41,7 @@ namespace E_ComerceApp.Mappers.Classes
                 CategoryId = product.CategoryID,
                 Price = product.Price,
                 ImageUrl = product.ImageUrl,
+                Count = product.Count,
                 Description = product.Description,
                 BrandName = _brandRepository.GetBrandById(product.BrandID).Name,
                 BrandImage = _brandRepository.GetBrandById(product.BrandID).Image,
