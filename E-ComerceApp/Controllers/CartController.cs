@@ -3,6 +3,7 @@ using E_CommerceApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using System.Security.Claims;
 
 namespace E_ComerceApp.Controllers
@@ -27,7 +28,9 @@ namespace E_ComerceApp.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
 
-            _cartService.AddToCart(user.Id, productId);
+            bool success = _cartService.AddToCart(user.Id, productId);
+            if (!success)
+                TempData["ErrorMessage"] = "Product is out of stock.";
 
             return RedirectToAction("Index",controllerName);
         }
@@ -43,7 +46,9 @@ namespace E_ComerceApp.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
 
-            _cartService.IncreaseQuantity(user.Id, productid);
+            bool success = _cartService.IncreaseQuantity(user.Id, productid);
+            if (!success)
+                TempData["ErrorMessage"] = "You've reached max amount of that product";
 
             return RedirectToAction("Index");
         }

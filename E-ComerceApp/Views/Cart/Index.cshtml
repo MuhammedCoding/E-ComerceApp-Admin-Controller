@@ -2,9 +2,16 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var errorMessage = TempData["ErrorMessage"] as string;
+
 }
 @model E_ComerceApp.ViewModels.CartViewModel
-
+<style>
+    .alert {
+        right: 0;
+        top: 120px;
+    }
+</style>
 @if (Model.Items.Any())
 {
 
@@ -53,7 +60,13 @@
            
 
         }
-
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger alert-dismissible position-fixed " role="alert" id="tempDataAlert">
+                @errorMessage
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
         <div class="cart-footer pt-3">
             <a asp-action="create" asp-controller="checkout" class="btn bg-main text-white btn-checkout">Checkout</a>
         </div>
@@ -63,3 +76,12 @@ else
 {
     <p>Your cart is empty.</p>
 }
+
+<script>
+    window.onload = function () {
+        setTimeout(function () {
+            var alert = document.getElementById('tempDataAlert');
+            if (alert) alert.style.display = 'none';
+        }, 4000);
+    }
+</script>

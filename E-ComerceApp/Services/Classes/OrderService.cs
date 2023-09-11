@@ -11,10 +11,12 @@ namespace E_ComerceApp.Services.Classes
     {
         private readonly IOrderRepository _orderRepository;
         private readonly ICartRepository _cartRepository;
-        public OrderService(IOrderRepository orderRepository, ICartRepository cartRepository)
+        private readonly IProductRepository _productRepository;
+        public OrderService(IOrderRepository orderRepository, ICartRepository cartRepository, IProductRepository productRepository)
         {
             _orderRepository = orderRepository;
             _cartRepository = cartRepository;
+            _productRepository = productRepository;
         }
 
         public void MakeOrder(OrderViewModel orderViewModel)
@@ -35,7 +37,12 @@ namespace E_ComerceApp.Services.Classes
                     Product = ci.Product,
                 }).ToList()
             };
-
+            foreach (var orderDetail in order.OrderDetails)
+            {
+                var product = _productRepository.GetProductById(orderDetail.ProductID);
+                product.Count -= orderDetail.Quantity;
+                _productRepository.UpdateProduct(product);
+            }
             _orderRepository.CreateOrder(order);
             _cartRepository.ClearCart(cart.ID);
         }
