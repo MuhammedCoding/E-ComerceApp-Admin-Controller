@@ -2,11 +2,13 @@
 using E_ComerceApp.Services.Interfaces;
 using E_ComerceApp.ViewModels;
 using E_CommerceApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_ComerceApp.Controllers
 {
+    [Authorize(Roles = "Customer")]
     public class WishlistController : Controller
     {
         private IWishlistService _wishlistService;

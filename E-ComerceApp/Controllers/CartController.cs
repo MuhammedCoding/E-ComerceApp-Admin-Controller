@@ -30,9 +30,12 @@ namespace E_ComerceApp.Controllers
 
             bool success = _cartService.AddToCart(user.Id, productId);
             if (!success)
-                TempData["ErrorMessage"] = "Product is out of stock.";
+                return Json(new { success = false, error = "Product is out of stock." });
 
-            return RedirectToAction("Index",controllerName);
+            return Json(new { success = true });
+
+            
+
         }
         public async Task<IActionResult> DecreaseQuantity(int productid)
         {

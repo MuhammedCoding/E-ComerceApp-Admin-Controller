@@ -115,8 +115,6 @@ namespace E_ComerceApp
             identityOptions.Value.Password.RequireUppercase = false;
             identityOptions.Value.Password.RequiredLength = 1;
 
-
-            // Create the 'Admin' role
             if (!await roleManager.RoleExistsAsync(adminRoleName))
             {
                 await roleManager.CreateAsync(new IdentityRole(adminRoleName));
