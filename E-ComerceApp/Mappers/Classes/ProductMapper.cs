@@ -4,9 +4,7 @@ using E_CommerceApp.Repositories.Interfaces;
 using E_CommerceApp.ViewModels;
 
 namespace E_ComerceApp.Mappers.Classes
-{
-
-    public class ProductMapper : IProductMapper
+{    public class ProductMapper : IProductMapper
     {
         private readonly IBrandRepository _brandRepository;
         private readonly ICategoryRepository _categoryRepository;

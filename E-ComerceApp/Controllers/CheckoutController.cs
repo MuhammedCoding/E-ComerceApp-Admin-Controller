@@ -67,7 +67,7 @@ namespace E_ComerceApp.Controllers
             if (ModelState.IsValid)
             {
                 _orderService.MakeOrder(orderViewModel);
-                return RedirectToAction("AllOrders" );
+                return RedirectToAction("AllOrders");
             }
 
             return View(orderViewModel);
